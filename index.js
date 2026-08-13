@@ -191,7 +191,7 @@ function printReport(r) {
   console.log(bar);
   console.log(`  白痴指数 (Idiot Index): ${r.score}/100   等级 ${r.grade}`);
   console.log(bar);
-  console.log(`  扫描目录 : ${r.target}`);
+  console.log(`  扫描目录 : ${r.target.split(path.sep).join('/')}`);
   console.log(`  源码文件 : ${r.scannedFiles} 个`);
   console.log('');
 
@@ -207,7 +207,7 @@ function printReport(r) {
 
   console.log(`[2] 最「胖」的 10 个文件 (按深度+抽象)`);
   for (const f of r.topFiles) {
-    console.log(`    - ${f.fileScore.toString().padStart(3)}  ${f.rel}  (行${f.lines}, 深${f.depth}, 类型${f.typeCount})`);
+    console.log(`    - ${f.fileScore.toString().padStart(3)}  ${f.rel.split(path.sep).join('/')}  (行${f.lines}, 深${f.depth}, 类型${f.typeCount})`);
   }
   console.log('');
 
