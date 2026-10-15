@@ -1,0 +1,37 @@
+name: verify
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 自测
+        run: node test.js
+
+      - name: 端到端冒烟
+        run: node scripts/smoke-cli.js
+
+      - name: 自扫（零依赖项目应拿 A 级）
+        run: node index.js . --max 20
+
+      - name: 路径打错必须被拒（不得给满分通过）
+        shell: bash
+        run: |
+          set +e
+          node index.js ./definitely-not-a-real-dir
+          rc=$?
+          echo "exit=$rc"
+          if [ "$rc" -ne 2 ]; then echo "期望退出码 2，实际 $rc"; exit 1; fi

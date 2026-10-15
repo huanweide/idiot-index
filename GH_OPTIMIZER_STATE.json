@@ -1,0 +1,84 @@
+{
+  "repo": "huanweide/idiot-index",
+  "round": 1,
+  "date": "2026-10-15",
+  "survival": {
+    "verdict": "keep",
+    "reason": "knip / depcheck / eslint / eslint-plugin-complexity 都只覆盖它的一半，且都无法给出「一个数字」用于横向传播。idiot-index 的定位是组合成单一挑衅指标，零依赖单文件可拷走，与knip（需 npm install、依赖树构建）正面竞争时赢在部署成本。且它是家族门面 licguard 的「依赖体检双子」另一只，被 README 互相引用，删掉会留断链。"
+  },
+  "direction": "single-point-deep-specialization",
+  "directionReason": "指标设计（0-100、确定性、单数字）本来就是这个工具的卖点，不动。深挖的是它的可信度层：现在它给出的是「看起来很确定的错误结论」——路径拼错也给满分通过，代码里正在用的 lodash 也建议删掉。评分公式不用改，改的是喂给公式的事实。",
+  "keyDefects": [
+    {
+      "id": "P0-path-typo-full-pass",
+      "title": "路径拼错 -> 0分/等级A/「依赖克制，赞」/退出码 0",
+      "evidence": "node index.js ./src/nonexistent-feature --max 20 => score 0, grade A, 源码文件 0 个, 输出「- 无。依赖克制，赞。」, exit=0。空目录同样。",
+      "impact": "CI 里目录改名/路径拼错 = 门禁静默失效且给绿色信号。比漏报恶劣：它主动说了「你可以放心」。",
+      "fix": "analyze() 前置校验：目标不存在/不是目录抛 ENOTARGET；新增退出码 3 表示未扫到源码，输出 basisComplete:false。index.js 不再用 process.exit() 截断 stdout（会输出残缺 JSON），改process.exitCode。"
+    },
+    {
+      "id": "P0-harmful-advice",
+      "title": "代码里真在用的依赖，照样建议「删掉」",
+      "evidence": "fixture: package.json 声明 lodash+axios，src/app.js 里 require 了 lodash/axios。旧实现仍输出「删掉 lodash → 用原生方法」「删掉 axios」。",
+      "impact": "照做即自找麻烦。一个「可进 CI 的建议工具」给出有害建议，比不给建议更糟——因为它听起来很权威。",
+      "fix": "新增 collectImports()/bareName()：扫源码里的 require() / import x from / import 'x' / lodash/fp 子路径；输出 usedInSource 字段；建议分为 [在用]（评估迁移成本）与 [未引用]（删掉）。默认计分口径保持不变以向后兼容，新增 --require-usage 提供更严口径。"
+    },
+    {
+      "id": "P1-monorepo-blind",
+      "title": "只读根 package.json，monorepo 子包依赖全漏",
+      "evidence": "fixture: workspaces packages/*，packages/a 声明 moment。扫根目录 redundantFound=[]。",
+      "fix": "collectManifests() 递归发现所有 package.json（跳过 SKIP_DIRS 与点目录，上限 200防跑飞），每条命中标注 declaredIn。"
+    },
+    {
+      "id": "P1-rel-path-degenerate",
+      "title": "rel 相对 cwd 而非扫描根，退化成 ..\\..\\..\\AppData\\...",
+      "evidence": "扫 /tmp 下的fixture 时 topFiles[0].rel = '..\\\\..\\\\..\\\\AppData\\\\Local\\\\Temp\\\\ii-used\\\\src\\\\app.js'。",
+      "impact": "从任意目录调用CLI 时报告不可读；若是 CI 里做 diff 比对，路径不稳定等于噪声。",
+      "fix": "fileMetrics 接收 rootDir，rel 改为 path.relative(rootDir, absPath) 并统一分隔符为 /。"
+    },
+    {
+      "id": "P1-params-silent",
+      "title": "--max abc / --max 缺值 / 未知选项 全部静默 exit 0",
+      "evidence": "node index.js . --max abc => exit 0；--max 无值=> exit 0；--bogus => exit 0。门禁参数写错 = 门禁不存在。",
+      "fix": "--max 非整数/缺值报错退 2；未知选项退 2。"
+    },
+    {
+      "id": "P2-version-blind-advice",
+      "title": "替代建议不带Node 版本门槛",
+      "evidence": "REDUNDANT 原为字符串表，glob→'node:fs.glob (Node 22+)'只是文案里的括号。",
+      "fix": "改为 {repl, requires} 对象；requires > 0 时建议文案带「需 Node NN+」。"
+    },
+    {
+      "id": "P2-npx-dead",
+      "title": "README 让用户跑 npx -y idiot-index，但 npm 上没这个包",
+      "evidence": "npm view idiot-index version => E404。",
+      "fix": "README 明写「npm 上没有这个包」，改用 node index.js 或 npm install -g .；删除吹牛的「CI 门禁用法」模板段；补 LICENSE。"
+    }
+  ],
+  "ci": {
+    "platforms": ["ubuntu-latest", "windows-latest"],
+    "steps": ["自测", "端到端冒烟", "自扫 --max 20", "路径打错必须退 2"],
+    "note": "windows runner 默认 pwsh，故最后一步显式 shell: bash"
+  },
+  "tests": {
+    "unit": "24/24（原有 7 项全部保留 + 17 项新增）",
+    "smoke": "31/31 断言（spawn 级）"
+  },
+  "mutationTests": [
+    {"name": "目标存在性校验失效（还原旧行为：空项目=满分）", "result": "unit fail 1, smoke fail 1 — 拦下"},
+    {"name": "不做源码引用检测（还原旧行为：一律建议删掉）", "result": "unit fail 8, smoke fail 4 — 拦下"},
+    {"name": "strictUsage 过滤失效（合法写法，不语法崩溃）", "result": "unit fail 1, smoke fail 2 — 拦下"},
+    {"name": "rel 改回相对 cwd（还原 ..\\..\\.. 退化）", "result": "unit fail 8, smoke fail 5 — 拦下"}
+  ],
+  "selfMistakes": [
+    "第一次批量变异脚本用了 4 空格缩进去匹配源码里的 2 空格 if，assert 直接报 NOT APPLIED。若没看这条输出就会把「未注入」当成「门禁失效」。已在函数返回码里显式打印 MUTATION NOT APPLIED。",
+    "第一轮变异4的输出里混进了变异2的失败项（因为脚本用共享备份还原，顺序执行有串扰）。发现后 diff 备份确认文件干净，单独重跑变异4 拿到干净数据。教训：变异必须逐个独立还原+复验，不要在同一批里连跑。",
+    "冒烟脚本最初把 stdout 与 stderr 拼在一起做 JSON.parse，导致「空目录 basisComplete」假失败。CLI 本身没错，是断言方法错了。已改为 run() 分开返回 out/err，需要看全部输出时用 both()。"
+  ],
+  "pr": {
+    "number": 1,
+    "url": "https://github.com/huanweide/idiot-index/pull/1",
+    "status": "squash-merged",
+    "rollback": "单 commit，git revert 即可整体撤销"
+  }
+}
