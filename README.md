@@ -3,6 +3,12 @@
 > 白痴指数 = 成品复杂度 ÷ 理论最小复杂度。指数越高，制造流程里的浪费越大。
 > 一键量化你的项目有多「胖」：可被原生 API 替代的依赖 + 过度工程分数。**零依赖、单文件、本地、确定性、可进 CI。**
 
+> **📦 便携性速览**
+>
+> - **零依赖、单文件**（`index.js`），拷进任意仓库 `node index.js .` 即跑，无需 `npm install`。
+> - 本地、确定性、可进 CI（`--max` 做门禁）；要求 Node ≥ 18。
+
+
 ## 为什么不是又一个 lint wrapper
 
 `knip` 查死依赖、`eslint` 查复杂度、`depcheck` 查未用——它们是三个工具。我们把它们**组合成一个挑衅性单一指标 + 原生替代建议**，并且：
@@ -125,3 +131,12 @@ MIT，详见 [LICENSE](LICENSE)。
 ## 赞助支持
 
 如果这个项目帮到了你，欢迎 [点 Star](https://github.com/huanweide/idiot-index) 支持；也可微信扫码自愿赞助（收款码见 `sponsor/wechat-qr.png`，纯静态图片、不含任何密钥）。
+---
+
+## 🧰 更多开源工具（by ReTri · 樊斯瑞）
+
+- 🎬 字幕 / 视频：[bili-subtitle-universal](https://github.com/huanweide/bili-subtitle-universal) · [live-subtitle](https://github.com/huanweide/live-subtitle) · [zhihuishu-helper](https://github.com/huanweide/zhihuishu-helper) · [video-brief](https://github.com/huanweide/video-brief)
+- 🩺 代码健康全家桶（18 轴零依赖 CLI）：[family-showcase](https://github.com/huanweide/family-showcase)
+- 🔧 命令行利器：[idiot-index](https://github.com/huanweide/idiot-index) · [recall-cli](https://github.com/huanweide/recall-cli) · [forge-safeguard](https://github.com/huanweide/forge-safeguard-20260812)
+- 🖥️ 桌面 / 资讯：[floatsnip](https://github.com/huanweide/floatsnip) · [tech-news-hub](https://github.com/huanweide/tech-news-hub)
+- 📦 全部仓库：<https://github.com/huanweide?tab=repositories>
