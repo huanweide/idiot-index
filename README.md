@@ -131,6 +131,7 @@ node scripts/smoke-cli.js      # 端到端冒烟（31 项 spawn 级断言）
 - ✂️ 视频摘要 — 长视频一键总结：[点此访问](https://github.com/huanweide/video-brief)
 - 🖥️ 总览 — 作者全部开源项目集散：[点此访问](https://github.com/huanweide/family-showcase)
 - 🩺 代码健康 — 零依赖多轴静态体检：[点此访问](https://github.com/huanweide/doctors)
+
 ## License
 
 MIT，详见 [LICENSE](LICENSE)。
