@@ -1,6 +1,6 @@
 {
   "repo": "huanweide/idiot-index",
-  "round": 1,
+  "round": 2,
   "date": "2026-10-15",
   "survival": {
     "verdict": "keep",
@@ -56,8 +56,16 @@
     }
   ],
   "ci": {
-    "platforms": ["ubuntu-latest", "windows-latest"],
-    "steps": ["自测", "端到端冒烟", "自扫 --max 20", "路径打错必须退 2"],
+    "platforms": [
+      "ubuntu-latest",
+      "windows-latest"
+    ],
+    "steps": [
+      "自测",
+      "端到端冒烟",
+      "自扫 --max 20",
+      "路径打错必须退 2"
+    ],
     "note": "windows runner 默认 pwsh，故最后一步显式 shell: bash"
   },
   "tests": {
@@ -65,10 +73,22 @@
     "smoke": "31/31 断言（spawn 级）"
   },
   "mutationTests": [
-    {"name": "目标存在性校验失效（还原旧行为：空项目=满分）", "result": "unit fail 1, smoke fail 1 — 拦下"},
-    {"name": "不做源码引用检测（还原旧行为：一律建议删掉）", "result": "unit fail 8, smoke fail 4 — 拦下"},
-    {"name": "strictUsage 过滤失效（合法写法，不语法崩溃）", "result": "unit fail 1, smoke fail 2 — 拦下"},
-    {"name": "rel 改回相对 cwd（还原 ..\\..\\.. 退化）", "result": "unit fail 8, smoke fail 5 — 拦下"}
+    {
+      "name": "目标存在性校验失效（还原旧行为：空项目=满分）",
+      "result": "unit fail 1, smoke fail 1 — 拦下"
+    },
+    {
+      "name": "不做源码引用检测（还原旧行为：一律建议删掉）",
+      "result": "unit fail 8, smoke fail 4 — 拦下"
+    },
+    {
+      "name": "strictUsage 过滤失效（合法写法，不语法崩溃）",
+      "result": "unit fail 1, smoke fail 2 — 拦下"
+    },
+    {
+      "name": "rel 改回相对 cwd（还原 ..\\..\\.. 退化）",
+      "result": "unit fail 8, smoke fail 5 — 拦下"
+    }
   ],
   "selfMistakes": [
     "第一次批量变异脚本用了 4 空格缩进去匹配源码里的 2 空格 if，assert 直接报 NOT APPLIED。若没看这条输出就会把「未注入」当成「门禁失效」。已在函数返回码里显式打印 MUTATION NOT APPLIED。",
@@ -80,5 +100,10 @@
     "url": "https://github.com/huanweide/idiot-index/pull/1",
     "status": "squash-merged",
     "rollback": "单 commit，git revert 即可整体撤销"
-  }
+  },
+  "lastOptimized": "2026-10-25",
+  "status": "optimized",
+  "improvements": [
+    "S1/S2/L11 自动修复(引擎)"
+  ]
 }
