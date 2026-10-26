@@ -1,3 +1,11 @@
+<!-- badges -->
+[![License](https://img.shields.io/github/license/huanweide/idiot-index)](LICENSE)
+[![Stars](https://img.shields.io/github/stars/huanweide/idiot-index)](https://github.com/huanweide/idiot-index/stargazers)
+[![Engineering Health Family](https://img.shields.io/badge/Engineering%20Health%20Family-18%20axes-22c55e)](https://github.com/huanweide/family-showcase)
+<!-- /badges -->
+
+**🔧 Part of the [Engineering Health Family](https://github.com/huanweide/family-showcase)** (18 zero-dependency checkup axes). Standalone tool — see [doctors](https://github.com/huanweide/doctors) (monorepo) and [enghealth](https://github.com/huanweide/enghealth) (unified runner).
+
 # idiot-index · 白痴指数 CLI
 
 > 白痴指数 = 成品复杂度 ÷ 理论最小复杂度。指数越高，制造流程里的浪费越大。
