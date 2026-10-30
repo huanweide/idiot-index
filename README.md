@@ -1,5 +1,7 @@
+English: 暂未提供
+
 > [!WARNING]
-> **⚠️ 本轴已并入 [doctors](https://github.com/huanweide/doctors) 家族 monorepo → 本仓停止维护。**
+> **⚠️ 本工具已并入 [doctors](https://github.com/huanweide/doctors) monorepo → 本仓停止维护。**
 >
 > 代码原件已迁至 [`doctors/packages/idiot-index/`](https://github.com/huanweide/doctors/tree/main/packages/idiot-index)，
 > 在 doctors 里以 `doctors idiot` 子命令调用（或 `node packages/idiot-index/index.js`）。
@@ -8,10 +10,10 @@
 <!-- badges -->
 [![License](https://img.shields.io/github/license/huanweide/idiot-index)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/huanweide/idiot-index)](https://github.com/huanweide/idiot-index/stargazers)
-[![Engineering Health Family](https://img.shields.io/badge/Engineering%20Health%20Family-18%20axes-22c55e)](https://github.com/huanweide/family-showcase)
+[![zero-dep checkup CLI](https://img.shields.io/badge/zero--dep%20checkup%20CLI-18%20tools-22c55e)](https://github.com/huanweide/family-showcase)
 <!-- /badges -->
 
-**🔧 Part of the [Engineering Health Family](https://github.com/huanweide/family-showcase)** (18 zero-dependency checkup axes). Standalone tool — see [doctors](https://github.com/huanweide/doctors) (monorepo) and [enghealth](https://github.com/huanweide/enghealth) (unified runner).
+**🔧 本工具属于 [huanweide 零依赖 CLI 系列](https://github.com/huanweide/family-showcase)（共 18 件单文件工具）。可单独使用，也可在 [doctors](https://github.com/huanweide/doctors) monorepo 中以子命令调用，或用 [enghealth](https://github.com/huanweide/enghealth) 统一运行。**
 
 # idiot-index · 白痴指数 CLI
 
@@ -135,17 +137,9 @@ node test.js                   # 自测（24 项）
 node scripts/smoke-cli.js      # 端到端冒烟（31 项 spawn 级断言）
 ```
 
-## 🧰 同一作者的其他工具
+## 更多零依赖 CLI
 
-> 作者在做一系列开源效率工具，欢迎顺手点 Star 支持：
-
-- 📚 长篇创作 — AI 小说工坊，本地规则引擎零依赖：[点此访问](https://github.com/huanweide/novel-smith)
-- 🎓 网课助手 — 智慧树自动播放/续播/AI 答题：[点此访问](https://github.com/huanweide/zhihuishu-helper)
-- 🎬 字幕/视频 — B站字幕一键提取（零 Key 取官方字幕）：[点此访问](https://github.com/huanweide/bili-subtitle-universal)
-- 📺 实时字幕 — 直播/会议实时字幕：[点此访问](https://github.com/huanweide/live-subtitle)
-- ✂️ 视频摘要 — 长视频一键总结：[点此访问](https://github.com/huanweide/video-brief)
-- 🖥️ 总览 — 作者全部开源项目集散：[点此访问](https://github.com/huanweide/family-showcase)
-- 🩺 代码健康 — 零依赖多轴静态体检：[点此访问](https://github.com/huanweide/doctors)
+huanweide 还维护一系列同范式的零依赖代码体检 CLI（共 18 件单文件工具）。欢迎到 [family-showcase](https://github.com/huanweide/family-showcase) 总览，或直接使用聚合 runner [doctors](https://github.com/huanweide/doctors)。
 
 ## License
 
@@ -153,14 +147,4 @@ MIT，详见 [LICENSE](LICENSE)。
 
 ## 作者
 
-由 **ReTri · huanweide** 维护 · [GitHub 主页](https://github.com/huanweide)
-
----
-
-## 🧰 更多开源工具（by ReTri · huanweide）
-
-- 🎬 字幕 / 视频：[bili-subtitle-universal](https://github.com/huanweide/bili-subtitle-universal) · [live-subtitle](https://github.com/huanweide/live-subtitle) · [zhihuishu-helper](https://github.com/huanweide/zhihuishu-helper) · [video-brief](https://github.com/huanweide/video-brief)
-- 🩺 代码健康全家桶（18 轴零依赖 CLI）：[family-showcase](https://github.com/huanweide/family-showcase)
-- 🔧 命令行利器：[idiot-index](https://github.com/huanweide/idiot-index) · [recall-cli](https://github.com/huanweide/recall-cli) · [forge-safeguard](https://github.com/huanweide/forge-safeguard-20260812)
-- 🖥️ 桌面 / 资讯：[floatsnip](https://github.com/huanweide/floatsnip) · [tech-news-hub](https://github.com/huanweide/tech-news-hub)
-- 📦 全部仓库：<https://github.com/huanweide?tab=repositories>
+由 **huanweide** 维护 · [GitHub 主页](https://github.com/huanweide)
